@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function ProtectedRoute({ children }) {
-    // For demo, we allow access. In real app, check auth token.
-    const isAuthenticated = true;
-    return isAuthenticated ? children : <Navigate to="/login" />;
+    const { currentUser } = useAuth();
+    return currentUser ? children : <Navigate to="/login" />;
 }
