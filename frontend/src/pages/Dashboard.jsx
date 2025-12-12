@@ -1,128 +1,142 @@
-import React, { useState } from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+
+function StatCard({ title, value, note, icon }) {
+    return (
+        <div className="card p-6 hover:shadow-lg transition-shadow">
+            <div className="flex items-start justify-between mb-3">
+                <div className="text-sm font-medium text-muted">{title}</div>
+                <span className="text-2xl">{icon}</span>
+            </div>
+            <div className="text-3xl font-bold text-green-800 mb-2">{value}</div>
+            {note && <div className="text-xs text-muted">{note}</div>}
+        </div>
+    );
+}
 
 export default function Dashboard() {
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [prompts, setPrompts] = useState('');
-    const [predictions, setPredictions] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [imagePreview, setImagePreview] = useState(null);
-    const [hasAnalyzed, setHasAnalyzed] = useState(false);
-
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        setSelectedFile(file);
-        setImagePreview(URL.createObjectURL(file));
-        setPredictions([]);
-        setError(null);
-        setHasAnalyzed(false);
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!selectedFile) return;
-
-        setLoading(true);
-        setError(null);
-
-        const formData = new FormData();
-        formData.append('file', selectedFile);
-        formData.append('texts', prompts);
-
-        try {
-            const response = await fetch('/predict', {
-                method: 'POST',
-                body: formData,
-            });
-
-            if (!response.ok) {
-                throw new Error('Analysis failed');
-            }
-
-            const data = await response.json();
-            setPredictions(data.predictions || []);
-            if (data.image) {
-                setImagePreview(data.image);
-            }
-            setHasAnalyzed(true);
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setLoading(false);
-        }
-    };
+    const { currentUser } = useAuth();
 
     return (
-        <div className="p-8 max-w-4xl mx-auto">
-            <h1 className="text-3xl font-serif text-brand-900 mb-8">Dashboard</h1>
+        <div className="max-w-6xl mx-auto px-6 py-10">
+            {/* Welcome Header */}
+            <div className="mb-8">
+                <h1 className="display-heading text-4xl mb-2">Farm Management Dashboard</h1>
+                <p className="text-lg text-muted">
+                    Welcome back, <span className="font-semibold text-green-700">{currentUser?.email || 'Farmer'}</span>
+                </p>
+            </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
-                <div className="bg-white p-6 rounded-lg shadow-sm border border-slate-100">
-                    <h2 className="text-xl font-bold mb-4">Upload Image</h2>
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-1">Select Image</label>
-                            <input
-                                type="file"
-                                onChange={handleFileChange}
-                                accept="image/*"
-                                className="block w-full text-sm text-slate-500
-                  file:mr-4 file:py-2 file:px-4
-                  file:rounded-full file:border-0
-                  file:text-sm file:font-semibold
-                  file:bg-brand-50 file:text-brand-900
-                  hover:file:bg-brand-100"
-                            />
+            {/* Key Metrics */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <StatCard
+                    title="Active Farms"
+                    value="12"
+                    note="Across 3 regions"
+                    icon="🏡"
+                />
+                <StatCard
+                    title="Total Crops"
+                    value="8,450"
+                    note="Acres under cultivation"
+                    icon="🌾"
+                />
+                <StatCard
+                    title="Yield Prediction"
+                    value="94.2%"
+                    note="Accuracy this season"
+                    icon="📊"
+                />
+                <StatCard
+                    title="AI Models Active"
+                    value="18"
+                    note="Federated learning rounds"
+                    icon="🤖"
+                />
+            </div>
+
+            {/* Main Content Grid */}
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+                <div className="card p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                        <span className="text-3xl">🌱</span>
+                        <h3 className="font-semibold text-xl">Recent Farm Activity</h3>
+                    </div>
+                    <div className="space-y-3">
+                        <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <div>
+                                <div className="font-medium">North Valley Farm</div>
+                                <div className="text-sm text-muted">Wheat field monitoring</div>
+                            </div>
+                            <span className="text-xs badge">2 hours ago</span>
                         </div>
-
-                        <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-1">Prompts (comma separated)</label>
-                            <input
-                                type="text"
-                                value={prompts}
-                                onChange={(e) => setPrompts(e.target.value)}
-                                className="w-full p-2 border border-slate-300 rounded focus:ring-2 focus:ring-brand-900 focus:outline-none"
-                            />
+                        <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                            <div>
+                                <div className="font-medium">Green Acres</div>
+                                <div className="text-sm text-muted">Pest detection scan</div>
+                            </div>
+                            <span className="text-xs badge">5 hours ago</span>
                         </div>
-
-                        <button
-                            type="submit"
-                            disabled={!selectedFile || loading}
-                            className="w-full bg-brand-900 text-white py-2 rounded hover:bg-slate-800 transition disabled:opacity-50"
-                        >
-                            {loading ? 'Analyzing...' : 'Analyze Image'}
-                        </button>
-                    </form>
-                    {error && <p className="text-red-500 mt-4">{error}</p>}
+                        <div className="flex justify-between items-center py-2">
+                            <div>
+                                <div className="font-medium">Riverside Orchards</div>
+                                <div className="text-sm text-muted">Irrigation optimization</div>
+                            </div>
+                            <span className="text-xs badge">1 day ago</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div className="bg-white p-6 rounded-lg shadow-sm border border-slate-100">
-                    <h2 className="text-xl font-bold mb-4">Results</h2>
-                    {imagePreview && (
-                        <div className="mb-4">
-                            <img src={imagePreview} alt="Preview" className="w-full rounded-lg object-cover max-h-64" />
+                <div className="card p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                        <span className="text-3xl">📷</span>
+                        <h3 className="font-semibold text-xl">Image Analysis</h3>
+                    </div>
+                    <div className="space-y-4">
+                        <div>
+                            <div className="flex justify-between text-sm mb-2">
+                                <span className="text-muted">Images Processed Today</span>
+                                <span className="font-semibold">1,247</span>
+                            </div>
+                            <div className="w-full bg-gray-200 rounded-full h-2">
+                                <div className="bg-gradient-to-r from-green-600 to-green-700 h-2 rounded-full" style={{ width: '78%' }}></div>
+                            </div>
                         </div>
-                    )}
-
-                    {hasAnalyzed && (
-                        <>
-                            <div className="mb-4">
-                                <h3 className="font-semibold text-lg">Total Detected Objects: {predictions.length}</h3>
+                        <div>
+                            <div className="flex justify-between text-sm mb-2">
+                                <span className="text-muted">Detection Accuracy</span>
+                                <span className="font-semibold">96.8%</span>
                             </div>
-
-                            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 max-h-96 overflow-y-auto">
-                                {predictions.map((pred, idx) => (
-                                    <div key={idx} className="bg-slate-50 p-2 rounded border border-slate-100 flex flex-col items-center">
-                                        <img src={pred.crop} alt={pred.label} className="h-24 object-contain mb-2 rounded" />
-                                        <span className="font-medium text-brand-900 text-sm">{pred.label}</span>
-                                        <span className="text-xs text-green-700 bg-green-100 px-2 py-0.5 rounded-full mt-1">
-                                            {(pred.score * 100).toFixed(0)}%
-                                        </span>
-                                    </div>
-                                ))}
+                            <div className="w-full bg-gray-200 rounded-full h-2">
+                                <div className="bg-gradient-to-r from-green-600 to-green-700 h-2 rounded-full" style={{ width: '96.8%' }}></div>
                             </div>
-                        </>
-                    )}
+                        </div>
+                        <div className="mt-4 p-3 bg-green-50 rounded-lg">
+                            <p className="text-sm text-green-800">
+                                <strong>✓ All systems operational</strong> - Federated learning models are syncing successfully across all farm locations.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Additional Info */}
+            <div className="card p-6">
+                <div className="flex items-center gap-3 mb-4">
+                    <span className="text-3xl">🎯</span>
+                    <h3 className="font-semibold text-xl">Quick Actions</h3>
+                </div>
+                <div className="grid sm:grid-cols-3 gap-4">
+                    <Link to="/analysis" className="btn-primary text-center py-3">
+                        Upload New Images
+                    </Link>
+                    <button className="btn-secondary text-center py-3">
+                        Generate Report
+                    </button>
+                    <Link to="/analysis" className="btn-secondary text-center py-3">
+                        View Analytics
+                    </Link>
                 </div>
             </div>
         </div>
