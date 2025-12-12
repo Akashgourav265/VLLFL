@@ -21,6 +21,7 @@ ADAPTER_PATH = "vllfl_adapters_efficient"
 
 print(f"🚀 Initializing VLLFL Backend on {DEVICE}...")
 
+
 # 1. Load Base Model (Guaranteed to work)
 try:
     processor = Owlv2Processor.from_pretrained(CHECKPOINT)

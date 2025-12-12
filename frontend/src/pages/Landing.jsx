@@ -40,8 +40,9 @@ const IMAGES = [
 export default function Landing() {
     return (
         <div>
-            {/* Hero Section */}
+            {/* Hero Section - Home */}
             <section
+                id="home"
                 className="relative h-[60vh] lg:h-[70vh] flex items-center"
                 style={{
                     backgroundImage: `url(${HERO})`,
@@ -52,7 +53,7 @@ export default function Landing() {
                 <div className="absolute inset-0 bg-gradient-to-br from-black/50 via-black/40 to-green-900/50"></div>
                 <div className="relative z-10 max-w-6xl mx-auto px-6 text-white">
                     <div className="max-w-3xl">
-                        <h1 className="display-heading text-5xl md:text-6xl font-bold leading-tight mb-4">
+                        <h1 className="display-heading text-5xl md:text-6xl font-bold leading-tight mb-4" style={{ color: 'white', WebkitTextFillColor: 'white', background: 'none' }}>
                             Vision-Language Federated Learning for Agriculture
                         </h1>
                         <p className="text-xl md:text-2xl text-white/95 leading-relaxed mb-8">
@@ -66,7 +67,7 @@ export default function Landing() {
                                 Get Started →
                             </Link>
                             <a
-                                href="#features"
+                                href="#about"
                                 className="inline-block px-8 py-4 bg-white/10 backdrop-blur-md rounded-lg font-semibold text-lg text-white border-2 border-white/30 hover:bg-white/20 transition-all"
                             >
                                 Learn More
@@ -76,9 +77,12 @@ export default function Landing() {
                 </div>
             </section>
 
-            {/* Features Section */}
-            <section id="features" className="max-w-6xl mx-auto px-6 py-16">
+            {/* About Section */}
+            <section id="about" className="max-w-6xl mx-auto px-6 py-16">
                 <div className="text-center mb-12">
+                    <span className="inline-block px-4 py-1.5 bg-green-100 text-green-700 rounded-full text-sm font-semibold mb-4">
+                        About Us
+                    </span>
                     <h2 className="display-heading text-4xl mb-4">Agricultural Intelligence Solutions</h2>
                     <p className="text-lg text-muted max-w-2xl mx-auto">
                         Cutting-edge computer vision and AI technology designed specifically for modern farming operations
@@ -136,6 +140,78 @@ export default function Landing() {
                             </p>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            {/* Documentation Section */}
+            <section id="documentation" className="max-w-6xl mx-auto px-6 py-16">
+                <div className="text-center mb-12">
+                    <span className="inline-block px-4 py-1.5 bg-green-100 text-green-700 rounded-full text-sm font-semibold mb-4">
+                        Documentation
+                    </span>
+                    <h2 className="display-heading text-4xl mb-4">How It Works</h2>
+                    <p className="text-lg text-muted max-w-2xl mx-auto">
+                        Learn how VLLFL brings the power of federated learning to agricultural applications
+                    </p>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-8">
+                    <div className="card p-8">
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center text-white text-2xl">
+                                1
+                            </div>
+                            <h3 className="font-bold text-xl">Upload Farm Images</h3>
+                        </div>
+                        <p className="text-muted leading-relaxed">
+                            Capture and upload images from your farm using our secure platform. Images are processed locally on your device, ensuring complete privacy of your agricultural data.
+                        </p>
+                    </div>
+
+                    <div className="card p-8">
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center text-white text-2xl">
+                                2
+                            </div>
+                            <h3 className="font-bold text-xl">AI-Powered Detection</h3>
+                        </div>
+                        <p className="text-muted leading-relaxed">
+                            Our vision-language models analyze your images using text prompts. Detect crops, pests, diseases, and equipment with state-of-the-art accuracy powered by OWL-ViT.
+                        </p>
+                    </div>
+
+                    <div className="card p-8">
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center text-white text-2xl">
+                                3
+                            </div>
+                            <h3 className="font-bold text-xl">Federated Learning</h3>
+                        </div>
+                        <p className="text-muted leading-relaxed">
+                            Models improve collaboratively across farms without sharing raw data. Only model updates are exchanged, reducing bandwidth by 99% while maintaining privacy.
+                        </p>
+                    </div>
+
+                    <div className="card p-8">
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center text-white text-2xl">
+                                4
+                            </div>
+                            <h3 className="font-bold text-xl">Actionable Insights</h3>
+                        </div>
+                        <p className="text-muted leading-relaxed">
+                            Receive detailed analytics and predictions for crop yield, pest outbreaks, and optimal harvest times. Make data-driven decisions to maximize your farm's productivity.
+                        </p>
+                    </div>
+                </div>
+
+                <div className="text-center mt-12">
+                    <Link
+                        to="/login"
+                        className="inline-block px-10 py-4 bg-gradient-to-r from-green-600 to-green-700 rounded-xl font-semibold text-lg text-white hover:shadow-2xl hover:scale-105 transition-all"
+                    >
+                        Start Using VLLFL →
+                    </Link>
                 </div>
             </section>
         </div>
