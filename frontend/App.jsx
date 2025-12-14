@@ -1,13 +1,13 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Landing from "./pages/Landing";
-import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-import Analysis from "./pages/Analysis";
+import Navbar from "./Navbar";
+import ProtectedRoute from "./ProtectedRoute";
+import Landing from "./Landing";
+import Login from "./Login";
+import Dashboard from "./Dashboard";
+import Analysis from "./Analysis";
 
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./AuthContext";
 
 export default function App() {
   return (
