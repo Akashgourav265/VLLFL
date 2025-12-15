@@ -69,13 +69,13 @@ export default function Dashboard() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
                 <StatCard
                     title="Active Farms"
-                    value="12"
+                    value="3"
                     note="Across 3 regions"
                     icon="🏡"
                 />
                 <StatCard
                     title="Total Crops"
-                    value="8,450"
+                    value="30"
                     note="Acres under cultivation"
                     icon="🌾"
                 />
@@ -87,7 +87,7 @@ export default function Dashboard() {
                 />
                 <StatCard
                     title="AI Models Active"
-                    value="18"
+                    value="3"
                     note="Federated learning rounds"
                     icon="🤖"
                 />

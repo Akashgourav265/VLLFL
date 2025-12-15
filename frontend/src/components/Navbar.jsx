@@ -8,7 +8,7 @@ function AboutModal({ isOpen, onClose }) {
     const teamMembers = [
         "Akash Gourav",
         "Mahesh Challa",
-        "Uppal Balu",
+        "CH Balaji",
         "T Sai Koushik",
         "Sathvik"
     ];
@@ -125,7 +125,23 @@ export default function Navbar() {
                                 About Us
                             </button>
                             <a
+                                href="https://github.com/Akashgourav265/VLLFL"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-slate-600 hover:text-green-700 font-medium transition-colors"
+                            >
+                                GitHub
+                            </a>
+                            <a
                                 href="#documentation"
+                                className="text-slate-600 hover:text-green-700 font-medium transition-colors"
+                            >
+                                Guide
+                            </a>
+                            <a
+                                href="https://drive.google.com/file/d/1fVyavHWjQg9-4AWiia1zgqqP0ZkNsq9D/view?usp=sharing"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="text-slate-600 hover:text-green-700 font-medium transition-colors"
                             >
                                 Documentation

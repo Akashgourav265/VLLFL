@@ -1,5 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+
+/* Welcome Popup Modal Component */
+function WelcomePopup({ isOpen, onClose }) {
+    if (!isOpen) return null;
+
+    return (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center">
+            {/* Backdrop */}
+            <div
+                className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                onClick={onClose}
+            ></div>
+
+            {/* Modal */}
+            <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-[90%] mx-4 overflow-hidden animate-fade-in">
+                {/* Header with gradient */}
+                <div className="bg-gradient-to-r from-green-600 to-green-700 p-6 text-white text-center">
+                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
+                        <span className="text-3xl">✓</span>
+                    </div>
+                    <h2 className="text-2xl font-bold mb-2">VLLFL server started successfully</h2>
+                </div>
+
+                {/* Content */}
+                <div className="p-6">
+                    <div className="bg-slate-900 rounded-lg p-4 mb-6 text-center">
+                        <p className="text-green-400 font-mono text-sm">
+                            Server running at <span className="text-white font-semibold">127.0.0.1:5000</span>
+                        </p>
+                    </div>
+
+                    <button
+                        onClick={onClose}
+                        className="w-full py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-lg hover:shadow-lg hover:scale-[1.02] transition-all"
+                    >
+                        Continue →
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+}
 
 /* Professional agriculture-themed images from Unsplash */
 const HERO = "https://images.unsplash.com/photo-1574943320219-553eb213f72d?q=80&w=2000&auto=format&fit=crop";
@@ -38,8 +80,12 @@ const IMAGES = [
 ];
 
 export default function Landing() {
+    const [showPopup, setShowPopup] = useState(true);
+
     return (
         <div>
+            {/* Welcome Popup */}
+            <WelcomePopup isOpen={showPopup} onClose={() => setShowPopup(false)} />
             {/* Hero Section - Home */}
             <section
                 id="home"
@@ -78,11 +124,8 @@ export default function Landing() {
             </section>
 
             {/* About Section */}
-            <section id="about" className="max-w-6xl mx-auto px-6 py-16">
+            <section id="about" className="max-w-6xl mx-auto px-6 py-16" style={{ scrollMarginTop: '100px' }}>
                 <div className="text-center mb-12">
-                    <span className="inline-block px-4 py-1.5 bg-green-100 text-green-700 rounded-full text-sm font-semibold mb-4">
-                        About Us
-                    </span>
                     <h2 className="display-heading text-4xl mb-4">Agricultural Intelligence Solutions</h2>
                     <p className="text-lg text-muted max-w-2xl mx-auto">
                         Cutting-edge computer vision and AI technology designed specifically for modern farming operations
@@ -144,11 +187,8 @@ export default function Landing() {
             </section>
 
             {/* Documentation Section */}
-            <section id="documentation" className="max-w-6xl mx-auto px-6 py-16">
+            <section id="documentation" className="max-w-6xl mx-auto px-6 py-16" style={{ scrollMarginTop: '100px' }}>
                 <div className="text-center mb-12">
-                    <span className="inline-block px-4 py-1.5 bg-green-100 text-green-700 rounded-full text-sm font-semibold mb-4">
-                        Documentation
-                    </span>
                     <h2 className="display-heading text-4xl mb-4">How It Works</h2>
                     <p className="text-lg text-muted max-w-2xl mx-auto">
                         Learn how VLLFL brings the power of federated learning to agricultural applications
